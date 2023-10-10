@@ -1,0 +1,648 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>ZJU-Leaper: A Benchmark Dataset for Fabric Defect Detection</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e729c5c1-41b1-4dff-98a0-3f12b2731463" class="page serif"><header><h1 class="page-title"><strong>ZJU-Leaper: A Benchmark Dataset for Fabric Defect Detection</strong></h1></header><div class="page-body"><p id="c3b4dc9f-c90a-4816-b602-0386b9d1fc5f" class="">
+</p><h2 id="13aa7fd9-4e62-4dd4-b981-eef6d8eb73f4" class="">Datasets Comparison</h2><figure id="0896e911-78cb-4d15-897d-b8f9e42f1c7f" class="image"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Untitled.png"><img style="width:816px" src="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Untitled.png"/></a></figure><p id="459b5d83-2c7b-4eb5-a9e8-10c45967d97e" class="">
+</p><h2 id="e526281b-080e-4163-a87a-583c2c12a142" class="">Fabric Patterns</h2><figure id="6e675468-b590-48f2-903f-6406e478fa49" class="image"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Untitled%201.png"><img style="width:432px" src="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Untitled%201.png"/></a></figure><p id="b9ed6a64-a068-49f4-8dec-fef7252c843e" class="">
+</p><h2 id="0d16cca1-04b3-460c-9b22-357a0f50bdbc" class="">Dataset Statistics</h2><figure id="a5e1ba8e-13bb-41a8-b16d-9cdf42aa72fd" class="image"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Untitled%202.png"><img style="width:816px" src="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Untitled%202.png"/></a></figure><p id="f82b43a4-0dfd-407b-835c-693b3c71cb96" class="">
+</p><h2 id="deb6e71d-3c83-4dc3-93db-ed84eee2a18f" class="">Fabric Groups</h2><ul id="40f65598-96dc-46d6-a412-d02be06d8d67" class="bulleted-list"><li>Group 1: White Plain, Thick Stripe, Thin Stripe;</li></ul><ul id="4efc5680-e09b-4d2e-b3dc-6a1b247bd8e0" class="bulleted-list"><li>Group 2: Dot Pattern, Houndstooth, Gingham, Knot Pattern;</li></ul><ul id="3702b6fb-2791-465e-b6fe-4913443a36ca" class="bulleted-list"><li>Group 3: Twill Plaid, Blue Plaid, Brown Plaid, Gray Plaid, Red Plaid;</li></ul><ul id="20ed31fd-0368-4549-97bd-053394a8493e" class="bulleted-list"><li>Group 4: Floral Print 1, Floral Print 2, Floral Print 3;</li></ul><ul id="38636fe4-560b-4794-a4d7-7c7e81f9c653" class="bulleted-list"><li>Group 5: Pattern 1, Pattern 2, Pattern 3, Pattern 4;</li></ul><p id="33990001-d073-4c87-9ed1-fdf168719fcc" class="">
+</p><h2 id="3b76e956-092d-4d15-a2f1-e92fd38fc2b7" class="">Task Settings</h2><ul id="43944fec-2d75-46ba-8410-f2078b435b9c" class="bulleted-list"><li>Setting 1: Normal samples only (annotation-free) — when images of defect-free fabrics can be obtained cheaply, and those of defects are difficult to acquire.</li></ul><ul id="6f8c0aeb-322b-4c92-8bf0-8a0434bc0cb0" class="bulleted-list"><li>Setting 2: Small amount of defect data (with mask annotation) — when a small amount of defect data and annotation information can be obtained at a low cost, along with many normal images.</li></ul><ul id="f120d396-ae55-4630-8133-20135e36d638" class="bulleted-list"><li>Setting 3: A large amount of defect data (with label annotation) — when methods for the first two settings fail to train the inspection model effectively, and labeling information of defects can be quickly obtained.</li></ul><ul id="6791fb8d-de73-48e9-bac0-5296671170f0" class="bulleted-list"><li>Setting 4: A large amount of defect data (with bounding-box annotation) — more labor is involved in marking defects with bounding boxes that contain rough position and size information of defects.</li></ul><ul id="53a82860-e38d-4e15-93f9-100b30b70b68" class="bulleted-list"><li>Setting 5: A large amount of defect data (with mask annotation) — used as the last resort where the effort to mask all defects in a large number of samples becomes necessary.</li></ul><p id="9e1813dc-8a5e-455d-b629-fca6977d796e" class="">
+</p><h2 id="0577bcce-bcf9-4f3f-a2ef-d6d9b7305c1b" class="">Evaluation Metrics</h2><ol id="d0c103bb-afa0-44db-a857-3b945c66def4" class="numbered-list" start="1"><li>Pixel-level<figure id="b04e7051-bc6d-4d92-9d42-932d5ce397aa" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi><mrow><mi mathvariant="bold-italic">D</mi><mi mathvariant="bold-italic">i</mi><mi mathvariant="bold-italic">c</mi><mi mathvariant="bold-italic">e</mi><mo>=</mo><msubsup><mi mathvariant="bold-italic">F</mi><mn mathvariant="bold">1</mn><mrow><mi mathvariant="bold-italic">p</mi><mi mathvariant="bold-italic">i</mi><mi mathvariant="bold-italic">x</mi></mrow></msubsup><mo>=</mo><mfrac><mrow><mi mathvariant="bold-italic">T</mi><msup><mi mathvariant="bold-italic">P</mi><mrow><mi mathvariant="bold-italic">p</mi><mi mathvariant="bold-italic">i</mi><mi mathvariant="bold-italic">x</mi></mrow></msup></mrow><mrow><mi mathvariant="bold-italic">T</mi><msup><mi mathvariant="bold-italic">P</mi><mrow><mi mathvariant="bold-italic">p</mi><mi mathvariant="bold-italic">i</mi><mi mathvariant="bold-italic">x</mi></mrow></msup><mo mathvariant="bold-italic">+</mo><mfrac><mn mathvariant="bold">1</mn><mn mathvariant="bold">2</mn></mfrac><mo stretchy="false">(</mo><mi mathvariant="bold-italic">F</mi><msup><mi mathvariant="bold-italic">P</mi><mrow><mi mathvariant="bold-italic">p</mi><mi mathvariant="bold-italic">i</mi><mi mathvariant="bold-italic">x</mi></mrow></msup><mo mathvariant="bold-italic">+</mo><mi mathvariant="bold-italic">F</mi><msup><mi mathvariant="bold-italic">N</mi><mrow><mi mathvariant="bold-italic">p</mi><mi mathvariant="bold-italic">i</mi><mi mathvariant="bold-italic">x</mi></mrow></msup><mo stretchy="false">)</mo></mrow></mfrac></mrow></mi></mrow><annotation encoding="application/x-tex">\boldsymbol{Dice = F_1^{pix} = \frac{TP^{pix}}{TP^{pix} + \frac{1}{2}(FP^{pix} + FN^{pix})}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.60539em;vertical-align:-1.080108em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol">Dice</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel mathbf">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9661899999999998em;"><span style="top:-2.433692em;margin-left:-0.15972em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathbf mtight">1</span></span></span><span style="top:-3.180908em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">pix</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.266308em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel mathbf">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5252819999999998em;"><span style="top:-2.2648919999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">T</span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7742819999999999em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">pix</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin mathbf">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathbf mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathbf mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen mathbf">(</span><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7742819999999999em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">pix</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin mathbf">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.11424em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7742819999999999em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">pix</span></span></span></span></span></span></span></span></span><span class="mclose mathbf">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">T</span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8482819999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">pix</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.080108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></span></div></figure></li></ol><ol id="a65d49c2-d347-4906-8892-1ec3e920ce1d" class="numbered-list" start="2"><li>Region-level<figure id="89468552-318d-4a53-be0c-784781a07b50" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mi>r</mi><msup><mi>e</mi><mrow><mi>r</mi><mi>e</mi><mi>g</mi></mrow></msup><mo>=</mo><mfrac><mrow><mi mathvariant="normal">#</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>t</mi><mtext> </mtext><mi>p</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>e</mi><mi>d</mi><mtext> </mtext><mi>r</mi><mi>e</mi><mi>g</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi></mrow><mrow><mi mathvariant="normal">#</mi><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mtext> </mtext><mi>p</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>e</mi><mi>d</mi><mtext> </mtext><mi>r</mi><mi>e</mi><mi>g</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi></mrow></mfrac><mspace linebreak="newline"></mspace><mi>R</mi><mi>e</mi><msup><mi>c</mi><mrow><mi>r</mi><mi>e</mi><mi>g</mi></mrow></msup><mo>=</mo><mfrac><mrow><mi mathvariant="normal">#</mi><mi>d</mi><mi>e</mi><mi>t</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>d</mi><mtext> </mtext><mi>g</mi><mi>r</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi><mtext>–</mtext><mi>t</mi><mi>r</mi><mi>u</mi><mi>t</mi><mi>h</mi><mtext> </mtext><mi>r</mi><mi>e</mi><mi>g</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi></mrow><mrow><mi mathvariant="normal">#</mi><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mtext> </mtext><mi>g</mi><mi>r</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi><mtext>–</mtext><mi>t</mi><mi>r</mi><mi>u</mi><mi>t</mi><mi>h</mi><mtext> </mtext><mi>r</mi><mi>e</mi><mi>g</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi></mrow></mfrac><mspace linebreak="newline"></mspace><mi><mrow><msubsup><mi mathvariant="bold-italic">F</mi><mn mathvariant="bold">1</mn><mrow><mi mathvariant="bold-italic">r</mi><mi mathvariant="bold-italic">e</mi><mi mathvariant="bold-italic">g</mi></mrow></msubsup><mo>=</mo><mn mathvariant="bold">2</mn><mo mathvariant="bold-italic">⋅</mo><mfrac><mrow><mi mathvariant="bold-italic">P</mi><mi mathvariant="bold-italic">r</mi><msup><mi mathvariant="bold-italic">e</mi><mrow><mi mathvariant="bold-italic">r</mi><mi mathvariant="bold-italic">e</mi><mi mathvariant="bold-italic">g</mi></mrow></msup><mo mathvariant="bold-italic">⋅</mo><mi mathvariant="bold-italic">R</mi><mi mathvariant="bold-italic">e</mi><msup><mi mathvariant="bold-italic">c</mi><mrow><mi mathvariant="bold-italic">r</mi><mi mathvariant="bold-italic">e</mi><mi mathvariant="bold-italic">g</mi></mrow></msup></mrow><mrow><mi mathvariant="bold-italic">P</mi><mi mathvariant="bold-italic">r</mi><msup><mi mathvariant="bold-italic">e</mi><mrow><mi mathvariant="bold-italic">r</mi><mi mathvariant="bold-italic">e</mi><mi mathvariant="bold-italic">g</mi></mrow></msup><mo mathvariant="bold-italic">+</mo><mi mathvariant="bold-italic">R</mi><mi mathvariant="bold-italic">e</mi><msup><mi mathvariant="bold-italic">c</mi><mrow><mi mathvariant="bold-italic">r</mi><mi mathvariant="bold-italic">e</mi><mi mathvariant="bold-italic">g</mi></mrow></msup></mrow></mfrac></mrow></mi></mrow><annotation encoding="application/x-tex">Pre^{reg} = \frac{\#correct\ proposed\ regions}{\#total\ proposed\ regions}  \\    Rec^{reg} = \frac{\#detected\ ground \text{\textendash} truth\ regions}{\#total\ ground \text{\textendash} truth\ regions} \\ \boldsymbol{F_{1}^{reg} = 2 \cdot \frac{Pre^{reg} \cdot Rec^{reg}}{Pre^{reg} + Rec^{reg}}} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.714392em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.25188em;vertical-align:-0.8804400000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714399999999998em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">#</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mspace"> </span><span class="mord mathnormal">p</span><span class="mord mathnormal">ro</span><span class="mord mathnormal">p</span><span class="mord mathnormal">ose</span><span class="mord mathnormal">d</span><span class="mspace"> </span><span class="mord mathnormal">re</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">#</span><span class="mord mathnormal">correc</span><span class="mord mathnormal">t</span><span class="mspace"> </span><span class="mord mathnormal">p</span><span class="mord mathnormal">ro</span><span class="mord mathnormal">p</span><span class="mord mathnormal">ose</span><span class="mord mathnormal">d</span><span class="mspace"> </span><span class="mord mathnormal">re</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804400000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.714392em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.25188em;vertical-align:-0.8804400000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714399999999998em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">#</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">ro</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord text"><span class="mord">–</span></span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mspace"> </span><span class="mord mathnormal">re</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">#</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">ec</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">ro</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord text"><span class="mord">–</span></span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mspace"> </span><span class="mord mathnormal">re</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804400000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:2.18244em;vertical-align:-0.8193300000000001em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7920159999999998em;"><span style="top:-2.433692em;margin-left:-0.15972em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathbf mtight">1</span></span></span></span><span style="top:-3.180908em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight" style="margin-right:0.03704em;">reg</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.266308em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel mathbf">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathbf">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin mathbf">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36311em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.03194em;">Pr</span><span class="mord"><span class="mord boldsymbol">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.600108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight" style="margin-right:0.03704em;">reg</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin mathbf">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord boldsymbol">Re</span><span class="mord"><span class="mord boldsymbol">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.600108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight" style="margin-right:0.03704em;">reg</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.03194em;">Pr</span><span class="mord"><span class="mord boldsymbol">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight" style="margin-right:0.03704em;">reg</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin mathbf">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord boldsymbol">Re</span><span class="mord"><span class="mord boldsymbol">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight" style="margin-right:0.03704em;">reg</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8193300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></span></div></figure></li></ol><ol id="1db406cc-80b7-475a-9c31-518f89fbcac9" class="numbered-list" start="3"><li>Sample-level<figure id="3840a105-a1a3-4499-9889-7c04a9010166" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi><mrow><msubsup><mi mathvariant="bold-italic">F</mi><mn mathvariant="bold">1</mn><mrow><mi mathvariant="bold-italic">s</mi><mi mathvariant="bold-italic">a</mi><mi mathvariant="bold-italic">m</mi></mrow></msubsup><mo>=</mo><mfrac><mrow><mi mathvariant="bold-italic">T</mi><msup><mi mathvariant="bold-italic">P</mi><mrow><mi mathvariant="bold-italic">s</mi><mi mathvariant="bold-italic">a</mi><mi mathvariant="bold-italic">m</mi></mrow></msup></mrow><mrow><mi mathvariant="bold-italic">T</mi><msup><mi mathvariant="bold-italic">P</mi><mrow><mi mathvariant="bold-italic">s</mi><mi mathvariant="bold-italic">a</mi><mi mathvariant="bold-italic">m</mi></mrow></msup><mo mathvariant="bold-italic">+</mo><mfrac><mn mathvariant="bold">1</mn><mn mathvariant="bold">2</mn></mfrac><mo stretchy="false">(</mo><mi mathvariant="bold-italic">F</mi><msup><mi mathvariant="bold-italic">P</mi><mrow><mi mathvariant="bold-italic">s</mi><mi mathvariant="bold-italic">a</mi><mi mathvariant="bold-italic">m</mi></mrow></msup><mo mathvariant="bold-italic">+</mo><mi mathvariant="bold-italic">F</mi><msup><mi mathvariant="bold-italic">N</mi><mrow><mi mathvariant="bold-italic">s</mi><mi mathvariant="bold-italic">a</mi><mi mathvariant="bold-italic">m</mi></mrow></msup><mo stretchy="false">)</mo></mrow></mfrac></mrow></mi></mrow><annotation encoding="application/x-tex">\boldsymbol{F_1^{sam} = \frac{TP^{sam}}{TP^{sam} + \frac{1}{2}(FP^{sam} + FN^{sam})}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.443218em;vertical-align:-1.080108em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.724108em;"><span style="top:-2.4530000000000003em;margin-left:-0.15972em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathbf mtight">1</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">sam</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel mathbf">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36311em;"><span style="top:-2.2648919999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">T</span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.600108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">sam</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin mathbf">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathbf mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathbf mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen mathbf">(</span><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.600108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">sam</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin mathbf">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.11424em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.600108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">sam</span></span></span></span></span></span></span></span></span><span class="mclose mathbf">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">T</span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">sam</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.080108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></span></div></figure></li></ol><h2 id="abcc8a75-49c9-41c0-8246-582bfe2c1aea" class="">Other Resources</h2><ul id="20010abc-5b24-48f4-a6b6-6647409d3227" class="bulleted-list"><li><strong>Dataset download link</strong><ul id="898aa972-3077-4302-8260-b2d14115749e" class="bulleted-list"><li><a href="http://bit.ly/zjuleaper">http://bit.ly/zjuleaper</a></li></ul></li></ul><ul id="c5bd9ab2-e518-417a-9734-3f17861c8ccc" class="bulleted-list"><li><strong>Dataset API</strong><ul id="a480d629-fc49-42e8-82c3-272cc1f8af9d" class="bulleted-list"><li><a href="https://github.com/nico-zck/ZJU-Leaper-Dataset/tree/master/dataset_api">https://github.com/nico-zck/ZJU-Leaper-Dataset/tree/master/dataset_api</a></li></ul></li></ul><ul id="c8d059a1-3f46-4fe1-a5c0-ad26e44d0a48" class="bulleted-list"><li><strong>Codes of baseline experiments</strong><ul id="ac9be8df-8269-4013-8596-eb6d74a6ba29" class="bulleted-list"><li><a href="https://github.com/nico-zck/ZJU-Leaper-Dataset/tree/master/baselines">https://github.com/nico-zck/ZJU-Leaper-Dataset/tree/master/baselines</a></li></ul></li></ul><ul id="92cc213d-0f6e-4910-b80d-c658d64275dc" class="bulleted-list"><li><strong>Implementation of existing methods</strong><ul id="12e47f1b-6cc6-444d-8113-23c0bb7fd1ba" class="bulleted-list"><li><a href="https://github.com/nico-zck/ZJU-Leaper-Dataset/tree/master/related_work">https://github.com/nico-zck/ZJU-Leaper-Dataset/tree/master/related_work</a></li></ul></li></ul><p id="d5e8e010-8039-427a-b113-4fd8c9879a86" class="">
+</p><h2 id="f929fc63-6f69-4e3a-aa4e-fdded11e8399" class="">Related Paper</h2><p id="5a5fecc8-455e-4844-9f4d-5a77623fb1eb" class="">The paper titled &quot;ZJU-Leaper: A Benchmark Dataset for Fabric Defect Detection and a Comparative Study&quot; was accepted by <em>IEEE Transactions on Artificial Intelligence</em>.</p><h3 id="0fbfb51c-bcee-46c6-95d6-9238f7ac16e7" class="">Citation Tip</h3><pre id="24546f5f-bfc0-4d03-89dd-446a367195f8" class="code"><code>@article{zju-leaper,
+  author={Zhang, Chenkai and Feng, Shaozhe and Wang, Xulongqi and Wang, Yueming},
+  journal={IEEE Transactions on Artificial Intelligence}, 
+  title={ZJU-Leaper: A Benchmark Dataset for Fabric Defect Detection and a Comparative Study}, 
+  year={2020},
+  volume={1},
+  number={3},
+  pages={219-232},
+  doi={10.1109/TAI.2021.3057027}
+  issn={2691-4581},
+  publisher={IEEE},
+}</code></pre><p id="dffeb2af-d37f-4c5c-a208-a468963db0ea" class="">
+</p><h2 id="ddc81e88-6266-4534-b9d1-01c3c457a374" class="">Performance Benchmark</h2><div id="e04dde48-fcd1-4dc7-a656-5d11f9cac569" class="collection-content"><h4 class="collection-title">Baseline models</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>Model</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>Setting</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M4.46191,0 C3.8667,0 3.38428,0.482422 3.38428,1.07751 L3.38428,3.38425 L1.07764,3.38425 C0.482422,3.38425 0,3.86667 0,4.46179 C0,5.05688 0.482422,5.53931 1.07764,5.53931 L3.38428,5.53931 L3.38428,8.46063 L1.07764,8.46063 C0.482422,8.46063 0,8.94308 0,9.53818 C0,10.1333 0.482422,10.6157 1.07764,10.6157 L3.38428,10.6157 L3.38428,12.9224 C3.38428,13.5175 3.8667,13.9999 4.46191,13.9999 C5.05664,13.9999 5.53906,13.5175 5.53906,12.9224 L5.53906,10.6157 L8.46045,10.6157 L8.46045,12.9224 C8.46045,13.5175 8.94287,13.9999 9.53809,13.9999 C10.1333,13.9999 10.6157,13.5175 10.6157,12.9224 L10.6157,10.6157 L12.9224,10.6157 C13.5176,10.6157 14,10.1333 14,9.53818 C14,8.94308 13.5176,8.46063 12.9224,8.46063 L10.6157,8.46063 L10.6157,5.53931 L12.9224,5.53931 C13.5176,5.53931 14,5.05688 14,4.46179 C14,3.86667 13.5176,3.38425 12.9224,3.38425 L10.6157,3.38425 L10.6157,1.07751 C10.6157,0.482422 10.1333,0 9.53809,0 C8.94287,0 8.46045,0.482422 8.46045,1.07751 L8.46045,3.38425 L5.53906,3.38425 L5.53906,1.07751 C5.53906,0.482422 5.05664,0 4.46191,0 Z M5.53906,8.46063 L5.53906,5.53931 L8.46045,5.53931 L8.46045,8.46063 L5.53906,8.46063 Z"></path></svg></span>F1_pix</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M4.46191,0 C3.8667,0 3.38428,0.482422 3.38428,1.07751 L3.38428,3.38425 L1.07764,3.38425 C0.482422,3.38425 0,3.86667 0,4.46179 C0,5.05688 0.482422,5.53931 1.07764,5.53931 L3.38428,5.53931 L3.38428,8.46063 L1.07764,8.46063 C0.482422,8.46063 0,8.94308 0,9.53818 C0,10.1333 0.482422,10.6157 1.07764,10.6157 L3.38428,10.6157 L3.38428,12.9224 C3.38428,13.5175 3.8667,13.9999 4.46191,13.9999 C5.05664,13.9999 5.53906,13.5175 5.53906,12.9224 L5.53906,10.6157 L8.46045,10.6157 L8.46045,12.9224 C8.46045,13.5175 8.94287,13.9999 9.53809,13.9999 C10.1333,13.9999 10.6157,13.5175 10.6157,12.9224 L10.6157,10.6157 L12.9224,10.6157 C13.5176,10.6157 14,10.1333 14,9.53818 C14,8.94308 13.5176,8.46063 12.9224,8.46063 L10.6157,8.46063 L10.6157,5.53931 L12.9224,5.53931 C13.5176,5.53931 14,5.05688 14,4.46179 C14,3.86667 13.5176,3.38425 12.9224,3.38425 L10.6157,3.38425 L10.6157,1.07751 C10.6157,0.482422 10.1333,0 9.53809,0 C8.94287,0 8.46045,0.482422 8.46045,1.07751 L8.46045,3.38425 L5.53906,3.38425 L5.53906,1.07751 C5.53906,0.482422 5.05664,0 4.46191,0 Z M5.53906,8.46063 L5.53906,5.53931 L8.46045,5.53931 L8.46045,8.46063 L5.53906,8.46063 Z"></path></svg></span>F1_reg</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M4.46191,0 C3.8667,0 3.38428,0.482422 3.38428,1.07751 L3.38428,3.38425 L1.07764,3.38425 C0.482422,3.38425 0,3.86667 0,4.46179 C0,5.05688 0.482422,5.53931 1.07764,5.53931 L3.38428,5.53931 L3.38428,8.46063 L1.07764,8.46063 C0.482422,8.46063 0,8.94308 0,9.53818 C0,10.1333 0.482422,10.6157 1.07764,10.6157 L3.38428,10.6157 L3.38428,12.9224 C3.38428,13.5175 3.8667,13.9999 4.46191,13.9999 C5.05664,13.9999 5.53906,13.5175 5.53906,12.9224 L5.53906,10.6157 L8.46045,10.6157 L8.46045,12.9224 C8.46045,13.5175 8.94287,13.9999 9.53809,13.9999 C10.1333,13.9999 10.6157,13.5175 10.6157,12.9224 L10.6157,10.6157 L12.9224,10.6157 C13.5176,10.6157 14,10.1333 14,9.53818 C14,8.94308 13.5176,8.46063 12.9224,8.46063 L10.6157,8.46063 L10.6157,5.53931 L12.9224,5.53931 C13.5176,5.53931 14,5.05688 14,4.46179 C14,3.86667 13.5176,3.38425 12.9224,3.38425 L10.6157,3.38425 L10.6157,1.07751 C10.6157,0.482422 10.1333,0 9.53809,0 C8.94287,0 8.46045,0.482422 8.46045,1.07751 L8.46045,3.38425 L5.53906,3.38425 L5.53906,1.07751 C5.53906,0.482422 5.05664,0 4.46191,0 Z M5.53906,8.46063 L5.53906,5.53931 L8.46045,5.53931 L8.46045,8.46063 L5.53906,8.46063 Z"></path></svg></span>F1_sam</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>Note</th></tr></thead><tbody><tr id="378d6fca-8c6d-4698-8973-786f5cef7fe2"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/SC%20378d6fca8c6d46988973786f5cef7fe2.html">SC</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-red">Setting1</span></td><td class="cell-tTdM">0.169</td><td class="cell-rGUH">0.107</td><td class="cell-edlf">0.468</td><td class="cell-oPiv">Sparse coding</td></tr><tr id="83cd936a-6589-4849-bc50-4985413b0a4d"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/CAE%2083cd936a65894849bc504985413b0a4d.html">CAE</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-red">Setting1</span></td><td class="cell-tTdM">0.187</td><td class="cell-rGUH">0.103</td><td class="cell-edlf">0.432</td><td class="cell-oPiv">Convolutional auto-encoder</td></tr><tr id="8921d455-e0c8-47a6-a1db-4a2fd3d17776"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/OCSVM%208921d455e0c847a6a1db4a2fd3d17776.html">OCSVM</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-red">Setting1</span></td><td class="cell-tTdM">0.118</td><td class="cell-rGUH">0.071</td><td class="cell-edlf">0.469</td><td class="cell-oPiv">One-class SVM</td></tr><tr id="5106a479-5c5e-48be-b427-f76f823a64d5"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/U-Net%205106a4795c5e48beb427f76f823a64d5.html">U-Net</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-pink">Setting2</span></td><td class="cell-tTdM">0.558</td><td class="cell-rGUH">0.299</td><td class="cell-edlf">0.711</td><td class="cell-oPiv">U-Net model</td></tr><tr id="613ffc35-7cc3-4850-96f6-4cb2062f3478"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/U-Net(TL)%20613ffc357cc3485096f64cb2062f3478.html">U-Net(TL)</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-pink">Setting2</span></td><td class="cell-tTdM">0.603</td><td class="cell-rGUH">0.424</td><td class="cell-edlf">0.739</td><td class="cell-oPiv">U-Net with transfer learning</td></tr><tr id="02d8908b-6f6b-46d2-816d-3da6f67e5e1e"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/U-Net(DA)%2002d8908b6f6b46d2816d3da6f67e5e1e.html">U-Net(DA)</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-pink">Setting2</span></td><td class="cell-tTdM">0.588</td><td class="cell-rGUH">0.335</td><td class="cell-edlf">0.779</td><td class="cell-oPiv">U-Net with data augmentation</td></tr><tr id="d65766ec-94e8-411b-ab15-a584dbe84eba"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/U-Net(label)%20d65766ec94e8411bab15a584dbe84eba.html">U-Net(label)</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-yellow">Setting3</span></td><td class="cell-tTdM">0.224</td><td class="cell-rGUH">0.113</td><td class="cell-edlf">0.587</td><td class="cell-oPiv">Training with label annotations</td></tr><tr id="5b71781f-a413-479e-862f-0825a2b73b08"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/U-Net(bbox)%205b71781fa413479e862f0825a2b73b08.html">U-Net(bbox)</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-green">Setting4</span></td><td class="cell-tTdM">0.683</td><td class="cell-rGUH">0.538</td><td class="cell-edlf">0.84</td><td class="cell-oPiv">Training with bounding-box annotations</td></tr><tr id="b4f710ea-733c-4028-a3d6-26aa9c15988f"><td class="cell-title"><a href="ZJU-Leaper%20A%20Benchmark%20Dataset%20for%20Fabric%20Defect%20D%200896e91178cb4d15897db8f9e42f1c7f/Baseline%20models%20e04dde48fcd14dc7a6565d11f9cac569/U-Net%20b4f710ea733c4028a3d626aa9c15988f.html">U-Net</a></td><td class="cell-I[aM"><span class="selected-value select-value-color-blue">Setting5</span></td><td class="cell-tTdM">0.906</td><td class="cell-rGUH">0.724</td><td class="cell-edlf">0.856</td><td class="cell-oPiv">Training with all mask annotations, costly</td></tr></tbody></table></div><p id="3af2faea-7d24-40dd-b5f7-4c3b7c91b5e2" class="">
+</p></div></article></body></html>
